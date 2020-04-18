@@ -1,0 +1,16 @@
+/out/
+out/
+
+/.idea/
+
+/target/
+target/
+
+/bin/
+bin/
+
+.settings/
+.project
+.classpath
+ecoupon-redemption-system.iml
+*.iml

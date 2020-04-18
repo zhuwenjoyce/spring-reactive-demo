@@ -1,0 +1,21 @@
+package com.joyce.github.spring_guides.gs_reactive_rest_service;
+
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Mono;
+
+/**
+ * @author: Joyce Zhu
+ * @date: 2020/4/14
+ */
+@Component
+public class GreetingHandler {
+
+    public Mono<ServerResponse> hello(ServerRequest request) {
+        return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN)
+                .body(BodyInserters.fromValue("Hello, Spring!"));
+    }
+}
