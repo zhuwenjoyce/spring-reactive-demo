@@ -1,0 +1,30 @@
+package com.joyce.baeldung.spring_webflux;
+
+import org.junit.Test;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+public class EmployeeWebClient {
+    WebClient client = WebClient.create("http://localhost:8080");
+
+    @Test
+    public void test1(){
+        Mono<Employee> employeeMono = client.get()
+                .uri("/employees/{id}", "1")
+                .retrieve()
+                .bodyToMono(Employee.class);
+
+        employeeMono.subscribe(System.out::println);
+    }
+
+    @Test
+    public void test2(){
+        Flux<Employee> employeeFlux = client.get()
+                .uri("/employees")
+                .retrieve()
+                .bodyToFlux(Employee.class);
+        employeeFlux.subscribe(System.out::println);
+    }
+
+}
