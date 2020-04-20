@@ -75,25 +75,56 @@ public class MyController {
                             .build());
     }
 
-//    @GetMapping("/list-employee")
-//    public Flux<ServerSentEvent<ArrayList>> randomNumbers() {
-//        final Random random = new Random();
-//        Flux<ServerSentEvent<ArrayList>> result = Flux.interval(Duration.ofSeconds(1))
-//                .generate(ArrayList::new, (list, sink) -> {
-//                    int value = random.nextInt(100);
-//                    list.add(value);
-//                    sink.next(value);
-//                    if (list.size() == 10) {
-//                        sink.complete();
-//                    }
-//                    try {
-//                        Thread.sleep(1000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                    return list;
-//                });
-//        return result;
-//    }
+    /**
+     * @return 返回一个list数据：
+     * id:10
+     * event:list-employee
+     * data:[{"name":"name-0","id":23126},{"name":"name-1","id":5722},{"name":"name-2","id":224}]
+     *
+     * id:10
+     * event:list-employee
+     * data:[{"name":"name-0","id":34540},{"name":"name-1","id":34790},{"name":"name-2","id":33161}]
+     *
+     * id:10
+     * event:list-employee
+     * data:[{"name":"name-0","id":41999},{"name":"name-1","id":19512},{"name":"name-2","id":20713}]
+     */
+    @GetMapping("/list-employee")
+    public Flux<ServerSentEvent<Object>> listEmployeeController() {
+        final Random random = new Random();
+        Flux<ServerSentEvent<Object>> result = Flux.interval(Duration.ofSeconds(1))
+                .generate(ArrayList::new, (list, sink) -> {
+                    ArrayList dataList = listEmployee();
+                    if (list.size() > 10) {
+                        sink.complete();
+                    }
+                    list.add(dataList);
+
+                    ServerSentEvent<Object> serverSentEvent = ServerSentEvent.builder()
+                            .event("list-employee")
+                            .id("10")
+                            .data(dataList).build();
+                    sink.next(serverSentEvent);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    return list;
+                });
+        return result;
+    }
+
+    private ArrayList<Employee> listEmployee(){
+        ArrayList list = new ArrayList();
+        for (int i = 0; i < 3; i++) {
+            int id = new Random().nextInt(50000) +1;
+            String name = "name-"+i;
+            Employee e = new Employee(id,name);
+            list.add(e);
+        }
+        return list;
+    }
+
 
 }
