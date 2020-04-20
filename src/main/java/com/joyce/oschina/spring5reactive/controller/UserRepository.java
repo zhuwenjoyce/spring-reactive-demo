@@ -1,4 +1,4 @@
-package com.joyce.oschina.spring5reactive;
+package com.joyce.oschina.spring5reactive.controller;
 
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;

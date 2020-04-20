@@ -1,4 +1,4 @@
-package com.joyce.oschina.spring5reactive;
+package com.joyce.oschina.spring5reactive.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
  * @date: 2020/4/16
  */
 @Controller
-public class UserHandler {
+public class UserController {
     @Autowired
     private UserRepository userRepository;
 

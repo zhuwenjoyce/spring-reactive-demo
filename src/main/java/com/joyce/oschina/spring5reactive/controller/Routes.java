@@ -1,4 +1,4 @@
-package com.joyce.oschina.spring5reactive;
+package com.joyce.oschina.spring5reactive.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,11 +16,11 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Configuration
 public class Routes {
     @Autowired
-    private UserHandler userHandler;
+    private UserController userController;
 
     @Bean
     public RouterFunction<?> routerFunction() {
-        return route(GET("/api/user").and(accept(MediaType.APPLICATION_JSON)), userHandler::handleGetUsers)
-                .and(route(GET("/api/user/{id}").and(accept(MediaType.APPLICATION_JSON)), userHandler::handleGetUserById));
+        return route(GET("/api/user").and(accept(MediaType.APPLICATION_JSON)), userController::handleGetUsers)
+                .and(route(GET("/api/user/{id}").and(accept(MediaType.APPLICATION_JSON)), userController::handleGetUserById));
     }
 }

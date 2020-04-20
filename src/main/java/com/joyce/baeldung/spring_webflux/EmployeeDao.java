@@ -49,5 +49,8 @@ public class EmployeeDao {
         return null;
     }
 
+    public Employee hello(){
+        return map.get(1);
+    }
 
 }

@@ -3,7 +3,6 @@ package com.joyce.csdn.zdshare.controller;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuples;
@@ -31,19 +30,13 @@ public class MyController {
         map.put("msg","servletweb");
         return map;
     }
-//
-//    @GetMapping("webflux")
-//    public Mono<Map<String,String>> webflux(){
-//        return Mono.just(Map.of("msg","webflux"));
-//    }
 
-    @GetMapping("/webclient_demo")
-    public Mono<Map> httpget(){
-        return WebClient.create("http://localhost:8002")
-                .get()
-                .uri("/webflux")
-                .retrieve()
-                .bodyToMono(Map.class);
+    @GetMapping("webflux")
+    public Mono<Map<String,String>> webflux(){
+        Map map = new HashMap();
+//        map.put("name","zhangsan");
+        map.put("time", "" + System.currentTimeMillis());
+        return Mono.just(map);
     }
 
     /**
@@ -95,9 +88,9 @@ public class MyController {
         Flux<ServerSentEvent<Object>> result = Flux.interval(Duration.ofSeconds(1))
                 .generate(ArrayList::new, (list, sink) -> {
                     ArrayList dataList = listEmployee();
-                    if (list.size() > 10) {
-                        sink.complete();
-                    }
+//                    if (list.size() > 10) {
+//                        sink.complete(); // 停止发送数据
+//                    }
                     list.add(dataList);
 
                     ServerSentEvent<Object> serverSentEvent = ServerSentEvent.builder()
