@@ -1,5 +1,6 @@
 package com.joyce.my_demo;
 
+import org.junit.Test;
 import reactor.core.publisher.Flux;
 
 import java.time.Duration;
@@ -11,7 +12,7 @@ import java.time.temporal.ChronoUnit;
  */
 public class Flux数据源 {
 
-//    @Test
+    @Test
     public void test简单数据源(){
         System.out.println("*********** 固定数据，逗号分隔分批次打印：");
         Flux.just("Hello", "World").subscribe(System.out::println);
