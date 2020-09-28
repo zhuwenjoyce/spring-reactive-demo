@@ -8,12 +8,7 @@ public class Log {
 	static Logger logger = LoggerFactory.getLogger(Log.class);
 
 	public static void main(final String[] args) {
-		// demo
-		Flux.range(1, 2).log("Range:::")
+		Flux.range(1, 3).log("Range:::")
 				.subscribe(System.out::println);
-
-		// my code
-		Flux<Integer> flux = Flux.range(1, 2).log("Range:::");
-		flux.subscribe(System.out::println);
 	}
 }

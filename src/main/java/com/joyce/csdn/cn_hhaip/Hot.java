@@ -1,13 +1,13 @@
 package com.joyce.csdn.cn_hhaip;
 
-import java.time.Duration;
-
 import reactor.core.publisher.Flux;
+
+import java.time.Duration;
 
 public class Hot {
     public static void main(String[] args) throws InterruptedException {
         final Flux<Long> source = Flux.interval(Duration.ofSeconds(1))
-                .take(5)  // 拿5次
+                .take(2)  // 拿2次
                 .repeat(2) // 重复2遍，加上原始的那一遍，总共执行3遍
                 .publish()
                 .autoConnect();
