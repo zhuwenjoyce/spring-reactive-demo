@@ -27,7 +27,7 @@ public class FluxError处理 {
                 .subscribe(logger::info);
     }
     @Test
-    public void test_当发生错误_打印错误日志() {
+    public void test_当发生错误_doOnError() {
         Flux.just("a", "b")
                 .concatWith(Mono.error(new IllegalStateException()))
                 .doOnError( e -> {logger.error("发生错误了：：：" + e.getMessage(), e);})
