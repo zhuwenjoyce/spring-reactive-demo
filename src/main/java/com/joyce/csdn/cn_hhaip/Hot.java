@@ -13,7 +13,10 @@ public class Hot {
                 .autoConnect();
 //        source.subscribe();
         source.subscribe(l -> {
-            System.out.println("l === " + l);
+            System.out.println("subscribe1 === " + l);
+        });
+        source.subscribe(l -> {
+            System.out.println("subscribe2 === " + l);
         });
         System.out.println("00000");
         source.toStream().forEach(System.out::println);
