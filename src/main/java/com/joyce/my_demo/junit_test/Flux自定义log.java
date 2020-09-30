@@ -1,4 +1,4 @@
-package com.joyce.my_demo;
+package com.joyce.my_demo.junit_test;
 
 import org.junit.Test;
 import org.slf4j.Logger;
