@@ -1,5 +1,6 @@
 package com.joyce.my_demo.junit_test;
 
+import com.joyce.my_demo.model.UserModel;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +9,8 @@ import reactor.core.publisher.Flux;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -99,6 +102,24 @@ public class Flux数据源 {
         flux.doOnNext( integer -> {
             System.out.println("doOnNext ===== " + integer);
         });
+    }
+
+    @Test
+    public void test数据源_fromIterable() throws InterruptedException {
+        List<UserModel> users = Arrays.asList(new UserModel(1L, "User1"), new UserModel(2L, "User2"));
+        Flux<UserModel> flux = Flux.fromIterable(users);
+        flux.subscribe(obj -> {
+            logger.info("subscribe == " + obj);
+        });
+        flux.doOnNext( integer -> {
+            logger.info("doOnNext ===== " + integer);
+            try {
+                Thread.sleep(1000L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        Thread.sleep(5000L);
     }
 
 }

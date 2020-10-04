@@ -80,9 +80,9 @@ public class Flux页面展示Controller {
 //                .interval(Duration.ofSeconds(1))
                 .generate(ArrayList::new, (list, sink) -> {
                     ArrayList<Employee> dataList = listEmployee();
-//                    if (list.size() > 10) {
-//                        sink.complete(); // 停止发送数据
-//                    }
+                    if (list.size() > 5) {
+                        sink.complete(); // 停止发送数据
+                    }
                     list.add(dataList);
 
                     ServerSentEvent<Object> serverSentEvent = ServerSentEvent.builder()
