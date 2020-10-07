@@ -7,6 +7,7 @@ import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.util.Loggers;
 import reactor.util.function.Tuples;
 
 import java.time.Duration;
@@ -40,6 +41,41 @@ public class Flux页面展示Controller {
                     logger.info("m == " + m + ", " + m.getClass().getName());
                     return m;
                 })
+                .log()
+                .map(data -> ServerSentEvent.<Integer>builder()
+                        .event("random")
+                        .id(Long.toString(data.getT1()))
+                        .data(data.getT2())
+                        .build());
+        /*
+        每间隔一秒就向页面返回一次内容：
+        id:0
+        event:random
+        data:2
+
+        id:1
+        event:random
+        data:5
+
+        id:2
+        event:random
+        data:6
+        ......
+         */
+    }
+
+
+    private reactor.util.Logger reactorLogger = Loggers.getLogger(Flux页面展示Controller.class);
+
+    @GetMapping("/joyce/flux/log")
+    public Flux<ServerSentEvent<Integer>> randomNumbers_print_log() {
+        return Flux.interval(Duration.ofSeconds(1))
+                .map(seq -> Tuples.of(seq, ThreadLocalRandom.current().nextInt(10)))
+                .map( m -> {
+//                    logger.info("m == " + m + ", " + m.getClass().getName());
+                    return m;
+                })
+                .log(reactorLogger)
                 .map(data -> ServerSentEvent.<Integer>builder()
                         .event("random")
                         .id(Long.toString(data.getT1()))
