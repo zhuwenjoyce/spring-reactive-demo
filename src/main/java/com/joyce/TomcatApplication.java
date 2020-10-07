@@ -1,18 +1,14 @@
 package com.joyce;
 
-import org.apache.catalina.LifecycleException;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.reactive.config.EnableWebFlux;
-
 /**
  * @author: Joyce Zhu
  * @date: 2020/10/4
  */
-@SpringBootApplication
-@EnableWebFlux
+//@SpringBootApplication
+//@EnableWebFlux
 public class TomcatApplication {
 
-    public static void main(String[] args) throws LifecycleException {
+//    public static void main(String[] args) throws LifecycleException {
 //        HttpHandler handler = ...
 //        Servlet servlet = new TomcatHttpHandlerAdapter(handler);
 //
@@ -24,5 +20,5 @@ public class TomcatApplication {
 ////        server.setHost("127.0.0.1");
 //        server.setPort(9999);
 //        server.start();
-    }
+//    }
 }
