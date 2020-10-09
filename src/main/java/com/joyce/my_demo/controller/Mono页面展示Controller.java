@@ -21,32 +21,32 @@ public class Mono页面展示Controller {
     private static final Logger logger = LoggerFactory.getLogger(Mono页面展示Controller.class);
 
     @GetMapping("/joyce/mono/normal")
-    public Map<String,String> normal(){
+    public Map<String, String> normal() {
         Map map = new HashMap();
-        map.put("msg","normal");
+        map.put("time", "" + System.currentTimeMillis());
         return map;
     }
 
     @Value("${server.port}")
     Integer serverPort;
 
-    @GetMapping("/joyce/mono/webflux")
-    public Mono<Map<String,String>> webflux(){
-        Map map = new HashMap();
-//        map.put("name","zhangsan");
-        map.put("time", "" + System.currentTimeMillis());
-        return Mono.just(map);
-    }
-
     @GetMapping("/joyce/mono/webclient_demo")
-    public Mono<Map> httpget(){
-        WebClient.ResponseSpec responseSpec = WebClient.create("http://localhost:" + serverPort)
+    public Mono<Map> httpget() {
+        Mono<Map> mapMono = WebClient.create("http://localhost:" + serverPort)
                 .get()
-                .uri("/joyce/mono/webflux")
-                .retrieve();
-        Mono<Map> mapMono = responseSpec.bodyToMono(Map.class);
-        Disposable d = mapMono.subscribe(m -> m.put("client-time","" + System.currentTimeMillis()));
-//         mapMono.take(Duration.ofSeconds(2)); // 每隔2秒获取一次map值, 没起作用
+                .uri("/joyce/mono/normal")
+                .retrieve()
+                .bodyToMono(Map.class);
+
+        // block方法会报错：java.lang.IllegalStateException: block()/blockFirst()/blockLast() are blocking, which is not supported in thread reactor-http-nio-2
+//        mapMono.block();
+
+        // subscribe方法并不会改变map对象，页面仍然显示：{"time":"1602224415513"}
+        Disposable d = mapMono.subscribe(m -> {
+                m.put("client-time", "" + System.currentTimeMillis());
+                logger.info("time == " + m.get("time"));
+        });
+
         return mapMono;
     }
 }
