@@ -8,8 +8,10 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <spring-boot.version>2.3.1.RELEASE</spring-boot.version>
-        <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
+        <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
+        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+<!--        <spring-boot.version>2.3.1.RELEASE</spring-boot.version>-->
+<!--        <spring-cloud.version>Hoxton.SR5</spring-cloud.version>-->
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <jetty.version>9.4.32.v20200930</jetty.version>
     </properties>
@@ -94,6 +96,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -110,31 +117,39 @@
         </dependency>
 
         <dependency>
-            <groupId>io.projectreactor</groupId>
-            <artifactId>reactor-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>5.2.3.RELEASE</version>
         </dependency>
 
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.5</version>
+        </dependency>
+
+<!--        reactive-->
+        <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-core</artifactId>
-            <version>3.3.4.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-test</artifactId>
-            <version>3.3.4.RELEASE</version>
             <scope>test</scope>
         </dependency>
+
+<!--        目前WebFlux对关系型数据库支持不够完整，
+        使用 [r2dbc](https://github.com/spring-projects/spring-data-r2dbc) 作为 DAO，
+        使用 [jasync-r2dbc-mysql](https://github.com/jasync-sql/jasync-sql)作为驱动-->
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.5</version>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-r2dbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jasync-sql</groupId>
+            <artifactId>jasync-r2dbc-mysql</artifactId>
+            <version>1.1.4</version>
         </dependency>
 
 
