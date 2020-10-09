@@ -1,6 +1,6 @@
-package com.joyce.reactive_mysql.config;
+package com.joyce.reactive_jasync_mysql.config;
 
-import com.joyce.reactive_mysql.exception.NotFoundException;
+import com.joyce.reactive_jasync_mysql.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;

@@ -1,8 +1,8 @@
-package com.joyce.reactive_mysql.controller;
+package com.joyce.reactive_jasync_mysql.controller;
 
-import com.joyce.reactive_mysql.dao.PostRepository;
-import com.joyce.reactive_mysql.exception.NotFoundException;
-import com.joyce.reactive_mysql.model.PostModel;
+import com.joyce.reactive_jasync_mysql.dao.PostRepository;
+import com.joyce.reactive_jasync_mysql.exception.NotFoundException;
+import com.joyce.reactive_jasync_mysql.model.PostModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

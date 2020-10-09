@@ -1,4 +1,4 @@
-package com.joyce.reactive_mysql;
+package com.joyce.reactive_jasync_mysql;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

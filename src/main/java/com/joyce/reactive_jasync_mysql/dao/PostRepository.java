@@ -1,6 +1,6 @@
-package com.joyce.reactive_mysql.dao;
+package com.joyce.reactive_jasync_mysql.dao;
 
-import com.joyce.reactive_mysql.model.PostModel;
+import com.joyce.reactive_jasync_mysql.model.PostModel;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 
 /**

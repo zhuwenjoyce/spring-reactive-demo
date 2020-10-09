@@ -1,4 +1,4 @@
-package com.joyce.reactive_mysql.exception;
+package com.joyce.reactive_jasync_mysql.exception;
 
 /**
  * @author HelloWood

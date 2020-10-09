@@ -1,6 +1,7 @@
 # 使用 Spring WebFlux 构建非阻塞应用 - MySQL
 
-WebFlux 构建的 REST 接口应用，使用 MySQL 作为存储
+WebFlux 构建的 REST 接口应用，使用 MySQL 作为存储.
+r2dbc官网地址：https://r2dbc.io/
 
 ### 添加依赖 build.gradle 
 
