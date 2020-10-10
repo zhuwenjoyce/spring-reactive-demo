@@ -1,9 +1,9 @@
-package com.joyce.reactive_jasync_mysql.model;
+package com.joyce.reactive_redis.model;
 
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
-//import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@Table("t_post")
+@RedisHash("posts") // 这个注解非常重要，它可以将此类作为repository类的泛型key存在，以便存入redis缓存
 public class PostModel {
 
     @Id
