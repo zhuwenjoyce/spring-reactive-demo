@@ -1,4 +1,4 @@
-package com.joyce.reactive_jasync_mysql.model;
+package com.joyce.reactive_route.model;
 
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

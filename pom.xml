@@ -142,15 +142,15 @@
 <!--        目前WebFlux对关系型数据库支持不够完整，
         使用 [r2dbc](https://github.com/spring-projects/spring-data-r2dbc) 作为 DAO，
         使用 [jasync-r2dbc-mysql](https://github.com/jasync-sql/jasync-sql)作为驱动-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.data</groupId>-->
-<!--            <artifactId>spring-data-r2dbc</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.github.jasync-sql</groupId>-->
-<!--            <artifactId>jasync-r2dbc-mysql</artifactId>-->
-<!--            <version>1.1.4</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-r2dbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jasync-sql</groupId>
+            <artifactId>jasync-r2dbc-mysql</artifactId>
+            <version>1.1.4</version>
+        </dependency>
 
         <!-- reactive_redis -->
         <dependency>

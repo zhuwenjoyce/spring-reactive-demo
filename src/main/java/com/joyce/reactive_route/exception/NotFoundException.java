@@ -1,15 +1,15 @@
-package com.joyce.reactive_jasync_mysql.exception;
+package com.joyce.reactive_route.exception;
 
 public class NotFoundException extends Exception {
 
     public NotFoundException() {
     }
 
-    public NotFoundException(String id) {
+    public NotFoundException(Long id) {
         super(String.format("Entity %s Not found", id));
     }
 
-    public NotFoundException(String id, Throwable cause) {
+    public NotFoundException(Long id, Throwable cause) {
         super(String.format("Entity %s Not found", id), cause);
     }
 
@@ -17,7 +17,7 @@ public class NotFoundException extends Exception {
         super(cause);
     }
 
-    public NotFoundException(String id, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public NotFoundException(Long id, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(String.format("Entity %s Not found", id), cause, enableSuppression, writableStackTrace);
     }
 }

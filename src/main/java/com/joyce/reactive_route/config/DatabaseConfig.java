@@ -1,4 +1,4 @@
-package com.joyce.reactive_jasync_mysql.config;
+package com.joyce.reactive_route.config;
 
 import com.github.jasync.r2dbc.mysql.JasyncConnectionFactory;
 import com.github.jasync.sql.db.SSLConfiguration;
