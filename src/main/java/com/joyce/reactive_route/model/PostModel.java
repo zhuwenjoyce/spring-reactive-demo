@@ -3,6 +3,7 @@ package com.joyce.reactive_route.model;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
@@ -28,6 +29,7 @@ public class PostModel {
 
     private String content;
 
+    @Column("create_date")
     @CreatedDate
     private LocalDateTime createDate;
 }

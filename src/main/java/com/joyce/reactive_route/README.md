@@ -211,9 +211,10 @@ curl --request POST \
 - 修改 
 ```bash
 curl --request PUT \
-  --url http://localhost:8080/posts/4 \
+  --url http://localhost:8080/posts/5 \
   --header 'Content-Type: application/json' \
-  --data '{"title": "Spring WebFlux","content": "Content of Spring WebFlux, Joyce", "createDate":"2020-10-10 13:44:33"}'
+  --data '{"title": "Update WebFlux",\
+"content": "update Spring WebFlux"}'
 ```
 
 - 删除

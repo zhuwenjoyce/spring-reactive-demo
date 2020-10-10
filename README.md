@@ -4,12 +4,12 @@
 
 | module | description |
 |:-------|:------------|
-|[my_demo](./reactive_mysql/README.md)| 除了reactive_ 前缀的包，其他包的例子都包含在此包中。|
-|[reactive_mysql](./reactive_mysql/README.md)| 基本的 WebFlux Demo，使用 REST 接口，MySQL 作为存储。 demo 亲测可用|
-|[。。。](./reactive_mysql/README.md)| 以下为待验证的demo |
+|my_demo| 除了reactive_ 前缀的包，其他包的例子都包含在此包中。|
+|[reactive_mysql](./reactive_jasync_mysql/README.md)| 基本的 WebFlux Demo，使用 REST 接口，MySQL 作为存储。 demo 亲测可用 |
+|[reactive-router](./reactive_router/README.md)| 使用 WebFlux 的路由，不需要controller的暴露直接调用方法。 demo 亲测可用 |
+|[reactive-redis](./reactive_redis/README.md)| 基本的 WebFlux Demo，使用 REST 接口，Redis 作为存储。 demo 亲测可用 |
+|。。。| 以下为待验证的demo |
 |[reactive-mongo](./reactive-mongo/README.md)| 基本的 WebFlux Demo，使用 REST 接口，MongoDB 作为存储|
-|[reactive-redis](./reactive-redis/README.md)| 基本的 WebFlux Demo，使用 REST 接口，Redis 作为存储|
-|[reactive-router](./reactive-router/README.md)| 使用 WebFlux 的路由|
 |[reactive-security](./reactive-security/README.md)| 使用 Spring Security，Spring Session，MongoDB 作为存储 |
 |[reactive-multiple](./reactive-multiple/README.md)| 文件上传，使用 REST 接口|
 |[reactive-multiple-router](./reactive-multiple-router/README.md) | 文件上传，使用路由|
