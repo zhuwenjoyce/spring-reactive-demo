@@ -1,6 +1,7 @@
 package com.joyce.reactive_route.service;
 
 import com.joyce.reactive_route.dao.PostRepository;
+import com.joyce.reactive_route.dao.PostRepository2;
 import com.joyce.reactive_route.exception.NotFoundException;
 import com.joyce.reactive_route.model.PostModel;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,9 @@ public class PostService {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    PostRepository2 postRepository2;
 
     public Mono<ServerResponse> list(ServerRequest request) {
         logger.info("exec PostService.list");
@@ -56,6 +60,30 @@ public class PostService {
         Mono<PostModel> postModel = postRepository.findByTitle(title);
 //        postModel.is
         return ServerResponse.ok().body(postModel, PostModel.class);
+    }
+
+    public Mono<ServerResponse> likeByTitle(ServerRequest request) {
+        logger.info("exec PostService.likeByTitle.");
+
+        Mono<PostModel> postModelList = postRepository.listPostModelLikeBy();
+//        postModelList.doOnNext(postModel -> {
+//            logger.info("doOnNext ========== " + JSON.toJSONString(postModel));
+//        });
+
+        MultiValueMap<String, String> queryParams = request.queryParams();
+        Optional<String> titleOptional = request.queryParam("title");
+        String title = titleOptional.get();
+        logger.info("exec PostService.getByName. title = " + title);
+
+
+//        postModelList.subscribe(postModel -> {
+//           logger.info(" subscribe ========== " + JSON.toJSONString(postModel));
+//        });
+
+//        postRepository2.likeByTitle(title);
+//        Mono<PostModel> postModel = postRepository.findByTitle(title);
+//        postModel.is
+        return ServerResponse.ok().body(postModelList, PostModel.class);
     }
 
     public Mono<ServerResponse> save(ServerRequest request) {

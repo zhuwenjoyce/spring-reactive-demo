@@ -1,6 +1,7 @@
 package com.joyce.reactive_route.dao;
 
 import com.joyce.reactive_route.model.PostModel;
+import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Mono;
 
@@ -10,8 +11,10 @@ import reactor.core.publisher.Mono;
  */
 public interface PostRepository extends ReactiveCrudRepository<PostModel, Long> {
 
-
     Mono<PostModel> findByTitle(String title);
+
+    @Query("SELECT * FROM t_post WHERE title = 'title11' ")
+    Mono<PostModel> listPostModelLikeBy();
 }
 
 
