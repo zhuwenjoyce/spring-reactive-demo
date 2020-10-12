@@ -8,6 +8,9 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
  * @date: 2020/10/10
  */
 public interface PostRepository extends ReactiveCrudRepository<PostModel, Long> {
+
+
+    PostModel findByTitle(String title);
 }
 
 

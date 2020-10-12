@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
@@ -39,6 +40,10 @@ public class RouterConfig {
                 .filter(myFilter1)
                 .before(serverRequest -> {
                     logger.info(">>>>>>>> before all request !");
+                    MultiValueMap<String, String> queryParams = serverRequest.queryParams();
+                    queryParams.entrySet().stream().forEach( entry -> {
+                                logger.info("key = {}, value = {}", entry.getKey(), entry.getValue());
+                    } );
                     return serverRequest;
                 })
                 .after((serverRequest, serverResponse) -> {

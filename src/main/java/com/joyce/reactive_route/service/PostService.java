@@ -13,6 +13,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.util.Optional;
 
 /**
  * @author: Joyce Zhu
@@ -48,6 +49,19 @@ public class PostService {
     public Mono<ServerResponse> get(ServerRequest request) {
         logger.info("exec PostService.get");
         return postRepository.findById(Long.valueOf(request.pathVariable("id")))
+                .flatMap(post ->
+                        ServerResponse
+                                .ok()
+                                .body(Mono.just(post), PostModel.class))
+                .switchIfEmpty(ServerResponse.notFound().build());
+    }
+
+
+    public Mono<ServerResponse> findByTitle(ServerRequest request) {
+        logger.info("exec PostService.getByName");
+        Optional<String> titleOptional = request.queryParam("title");
+        PostModel postModel = postRepository.findByTitle(titleOptional.get());
+        return postRepository.findById(Long.valueOf(request.pathVariable("title")))
                 .flatMap(post ->
                         ServerResponse
                                 .ok()
