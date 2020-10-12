@@ -14,13 +14,13 @@ import reactor.core.publisher.Mono;
  * @date: 2020/10/11
  */
 @Component
-public class MyFilter implements HandlerFilterFunction<ServerResponse, ServerResponse> {
-    private static final Logger logger = LoggerFactory.getLogger(MyFilter.class);
+public class MyFilter2 implements HandlerFilterFunction<ServerResponse, ServerResponse> {
+    private static final Logger logger = LoggerFactory.getLogger(MyFilter2.class);
 
         @Override
         public Mono<ServerResponse> filter(ServerRequest serverRequest,
                                            HandlerFunction<ServerResponse> handlerFunction) {
-            logger.info(">>>>>>>>> myFilter start.");
+            logger.info(">>>>>>>>> myFilter 2 start.");
 //            if (serverRequest.pathVariable("name").equalsIgnoreCase("test")) {
 //                return ServerResponse.status(HttpStatus.UNAUTHORIZED).build();
 //            }
