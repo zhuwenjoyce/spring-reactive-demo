@@ -213,8 +213,7 @@ curl --request POST \
 curl --request PUT \
   --url http://localhost:8080/posts/5 \
   --header 'Content-Type: application/json' \
-  --data '{"title": "Update WebFlux",\
-"content": "update Spring WebFlux"}'
+  --data '{"title": "Update WebFlux","content": "update Spring WebFlux"}'
 ```
 
 - 删除

@@ -1,0 +1,222 @@
+{
+    "id": 5,
+    "title": "Update WebFlux",
+    "content": "update Spring WebFlux",
+    "createDate": {
+        "year": 2020,
+        "dayOfMonth": 10,
+        "monthOfYear": 10,
+        "hourOfDay": 8,
+        "minuteOfHour": 45,
+        "secondOfMinute": 12,
+        "weekOfWeekyear": 41,
+        "weekyear": 2020,
+        "yearOfEra": 2020,
+        "millisOfDay": 31512000,
+        "millisOfSecond": 0,
+        "yearOfCentury": 20,
+        "centuryOfEra": 20,
+        "chronology": {
+            "zone": {
+                "fixed": true,
+                "id": "UTC"
+            }
+        },
+        "dayOfWeek": 6,
+        "era": 1,
+        "dayOfYear": 284,
+        "fields": [
+            {
+                "lenient": false,
+                "rangeDurationField": null,
+                "leapDurationField": {
+                    "unitMillis": 86400000,
+                    "precise": true,
+                    "name": "days",
+                    "type": {
+                        "name": "days"
+                    },
+                    "supported": true
+                },
+                "minimumValue": -292275054,
+                "maximumValue": 292278993,
+                "durationField": {
+                    "unitMillis": 31556952000,
+                    "precise": false,
+                    "name": "years",
+                    "type": {
+                        "name": "years"
+                    },
+                    "supported": true
+                },
+                "name": "year",
+                "type": {
+                    "durationType": {
+                        "name": "years"
+                    },
+                    "rangeDurationType": null,
+                    "name": "year"
+                },
+                "supported": true
+            },
+            {
+                "lenient": false,
+                "rangeDurationField": {
+                    "unitMillis": 31556952000,
+                    "precise": false,
+                    "name": "years",
+                    "type": {
+                        "name": "years"
+                    },
+                    "supported": true
+                },
+                "leapDurationField": {
+                    "unitMillis": 86400000,
+                    "precise": true,
+                    "name": "days",
+                    "type": {
+                        "name": "days"
+                    },
+                    "supported": true
+                },
+                "minimumValue": 1,
+                "maximumValue": 12,
+                "durationField": {
+                    "unitMillis": 2629746000,
+                    "precise": false,
+                    "name": "months",
+                    "type": {
+                        "name": "months"
+                    },
+                    "supported": true
+                },
+                "name": "monthOfYear",
+                "type": {
+                    "durationType": {
+                        "name": "months"
+                    },
+                    "rangeDurationType": {
+                        "name": "years"
+                    },
+                    "name": "monthOfYear"
+                },
+                "supported": true
+            },
+            {
+                "rangeDurationField": {
+                    "unitMillis": 2629746000,
+                    "precise": false,
+                    "name": "months",
+                    "type": {
+                        "name": "months"
+                    },
+                    "supported": true
+                },
+                "minimumValue": 1,
+                "maximumValue": 31,
+                "unitMillis": 86400000,
+                "lenient": false,
+                "durationField": {
+                    "unitMillis": 86400000,
+                    "precise": true,
+                    "name": "days",
+                    "type": {
+                        "name": "days"
+                    },
+                    "supported": true
+                },
+                "name": "dayOfMonth",
+                "type": {
+                    "durationType": {
+                        "name": "days"
+                    },
+                    "rangeDurationType": {
+                        "name": "months"
+                    },
+                    "name": "dayOfMonth"
+                },
+                "supported": true,
+                "leapDurationField": null
+            },
+            {
+                "range": 86400000,
+                "rangeDurationField": {
+                    "unitMillis": 86400000,
+                    "precise": true,
+                    "name": "days",
+                    "type": {
+                        "name": "days"
+                    },
+                    "supported": true
+                },
+                "maximumValue": 86399999,
+                "unitMillis": 1,
+                "lenient": false,
+                "durationField": {
+                    "name": "millis",
+                    "type": {
+                        "name": "millis"
+                    },
+                    "supported": true,
+                    "unitMillis": 1,
+                    "precise": true
+                },
+                "minimumValue": 0,
+                "name": "millisOfDay",
+                "type": {
+                    "durationType": {
+                        "name": "millis"
+                    },
+                    "rangeDurationType": {
+                        "name": "days"
+                    },
+                    "name": "millisOfDay"
+                },
+                "supported": true,
+                "leapDurationField": null
+            }
+        ],
+        "fieldTypes": [
+            {
+                "durationType": {
+                    "name": "years"
+                },
+                "rangeDurationType": null,
+                "name": "year"
+            },
+            {
+                "durationType": {
+                    "name": "months"
+                },
+                "rangeDurationType": {
+                    "name": "years"
+                },
+                "name": "monthOfYear"
+            },
+            {
+                "durationType": {
+                    "name": "days"
+                },
+                "rangeDurationType": {
+                    "name": "months"
+                },
+                "name": "dayOfMonth"
+            },
+            {
+                "durationType": {
+                    "name": "millis"
+                },
+                "rangeDurationType": {
+                    "name": "days"
+                },
+                "name": "millisOfDay"
+            }
+        ],
+        "values": [
+            2020,
+            10,
+            10,
+            31512000
+        ]
+    }
+}

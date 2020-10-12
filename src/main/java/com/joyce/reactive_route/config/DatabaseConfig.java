@@ -37,18 +37,19 @@ public class DatabaseConfig extends AbstractR2dbcConfiguration {
     @Bean // 一定要把这个bean注入到spring，否则会报错database组装失败
     public ConnectionFactory connectionFactory() {
         SSLConfiguration sslConfiguration = new SSLConfiguration();
-        com.github.jasync.sql.db.Configuration configuration = new com.github.jasync.sql.db.Configuration(
+        com.github.jasync.sql.db.Configuration config = new com.github.jasync.sql.db.Configuration(
                 username,
                 host,
                 port,
                 password,
-                database,
-                sslConfiguration,
-                Charset.forName("UTF-8")
+                database
+                ,sslConfiguration
+                ,Charset.forName("UTF-8")
+                ,100
         );
+        MySQLConnectionFactory factory = new MySQLConnectionFactory(config);
 
-        MySQLConnectionFactory connectionFactory = new MySQLConnectionFactory(configuration);
-        return new JasyncConnectionFactory(connectionFactory);
+        return new JasyncConnectionFactory(factory);
     }
 
 }

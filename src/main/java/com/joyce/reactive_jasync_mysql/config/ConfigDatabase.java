@@ -16,7 +16,7 @@ import java.nio.charset.Charset;
  * @date: 2020/10/9
  */
 @Component
-public class DatabaseConfig extends AbstractR2dbcConfiguration {
+public class ConfigDatabase extends AbstractR2dbcConfiguration {
 
     @Value("${spring.datasource.mysql.host}")
     private String host;
