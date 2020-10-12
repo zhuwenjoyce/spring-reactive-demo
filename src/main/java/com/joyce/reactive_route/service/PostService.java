@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
@@ -34,6 +35,29 @@ public class PostService {
                 .body(postRepository.findAll(), PostModel.class);
     }
 
+    public Mono<ServerResponse> get(ServerRequest request) {
+        logger.info("exec PostService.get");
+        Long id = Long.valueOf(request.pathVariable("id"));
+        Mono<PostModel> postModelMono = postRepository.findById(id);
+        return postModelMono.flatMap(post ->
+                        ServerResponse
+                                .ok()
+                                .body(Mono.just(post), PostModel.class))
+                .switchIfEmpty(ServerResponse.notFound().build());
+    }
+
+
+    public Mono<ServerResponse> findByTitle(ServerRequest request) {
+        logger.info("exec PostService.getByName.");
+        MultiValueMap<String, String> queryParams = request.queryParams();
+        Optional<String> titleOptional = request.queryParam("title");
+        String title = titleOptional.get();
+        logger.info("exec PostService.getByName. title = " + title);
+        Mono<PostModel> postModel = postRepository.findByTitle(title);
+//        postModel.is
+        return ServerResponse.ok().body(postModel, PostModel.class);
+    }
+
     public Mono<ServerResponse> save(ServerRequest request) {
         logger.info("exec PostService.save");
         return request.bodyToMono(PostModel.class)
@@ -44,31 +68,6 @@ public class PostService {
                         ).build()
                 );
     }
-
-
-    public Mono<ServerResponse> get(ServerRequest request) {
-        logger.info("exec PostService.get");
-        return postRepository.findById(Long.valueOf(request.pathVariable("id")))
-                .flatMap(post ->
-                        ServerResponse
-                                .ok()
-                                .body(Mono.just(post), PostModel.class))
-                .switchIfEmpty(ServerResponse.notFound().build());
-    }
-
-
-    public Mono<ServerResponse> findByTitle(ServerRequest request) {
-        logger.info("exec PostService.getByName");
-        Optional<String> titleOptional = request.queryParam("title");
-        PostModel postModel = postRepository.findByTitle(titleOptional.get());
-        return postRepository.findById(Long.valueOf(request.pathVariable("title")))
-                .flatMap(post ->
-                        ServerResponse
-                                .ok()
-                                .body(Mono.just(post), PostModel.class))
-                .switchIfEmpty(ServerResponse.notFound().build());
-    }
-
 
     public Mono<ServerResponse> update(ServerRequest request) {
         logger.info("exec PostService.update");

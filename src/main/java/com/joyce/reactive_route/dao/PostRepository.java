@@ -2,6 +2,7 @@ package com.joyce.reactive_route.dao;
 
 import com.joyce.reactive_route.model.PostModel;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import reactor.core.publisher.Mono;
 
 /**
  * @author: Joyce Zhu
@@ -10,7 +11,7 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 public interface PostRepository extends ReactiveCrudRepository<PostModel, Long> {
 
 
-    PostModel findByTitle(String title);
+    Mono<PostModel> findByTitle(String title);
 }
 
 

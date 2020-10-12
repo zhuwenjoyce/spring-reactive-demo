@@ -42,7 +42,7 @@ public class RouterConfig {
                     logger.info(">>>>>>>> before all request !");
                     MultiValueMap<String, String> queryParams = serverRequest.queryParams();
                     queryParams.entrySet().stream().forEach( entry -> {
-                                logger.info("key = {}, value = {}", entry.getKey(), entry.getValue());
+                                logger.info(">>>>>>>> before all request ! key = {}, value = {}", entry.getKey(), entry.getValue());
                     } );
                     return serverRequest;
                 })
@@ -53,6 +53,7 @@ public class RouterConfig {
                 .path("/posts", builder ->
                         builder.GET("", postService::list)
                         .GET("/{id}", postService::get)
+                        .POST("/findByTitle", contentType(MediaType.APPLICATION_JSON), postService::findByTitle)
                         .filter(myFilter2)
                         .before(serverRequest -> {
                             logger.info(">>>>>>>> before request /posts ");
