@@ -27,12 +27,14 @@ public class PostService {
     private PostRepository postRepository;
 
     public Mono<ServerResponse> list(ServerRequest request) {
+        logger.info("exec PostService.list");
         return ServerResponse
                 .ok()
                 .body(postRepository.findAll(), PostModel.class);
     }
 
     public Mono<ServerResponse> save(ServerRequest request) {
+        logger.info("exec PostService.save");
         return request.bodyToMono(PostModel.class)
                 .flatMap(post -> postRepository.save(post))
                 .flatMap(post ->
@@ -44,6 +46,7 @@ public class PostService {
 
 
     public Mono<ServerResponse> get(ServerRequest request) {
+        logger.info("exec PostService.get");
         return postRepository.findById(Long.valueOf(request.pathVariable("id")))
                 .flatMap(post ->
                         ServerResponse
@@ -54,6 +57,7 @@ public class PostService {
 
 
     public Mono<ServerResponse> update(ServerRequest request) {
+        logger.info("exec PostService.update");
         String idStr = request.pathVariable("id");
         logger.info("update start. idStr = " + idStr);
         Mono<ServerResponse> responseMono = Mono.zip((data) -> {
@@ -81,6 +85,7 @@ public class PostService {
     }
 
     public Mono<ServerResponse> delete(ServerRequest request) {
+        logger.info("exec PostService.delete");
         String idStr = request.pathVariable("id");
         Long id = Long.valueOf(idStr);
         return postRepository.findById(id)

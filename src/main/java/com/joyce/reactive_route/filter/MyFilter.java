@@ -20,7 +20,7 @@ public class MyFilter implements HandlerFilterFunction<ServerResponse, ServerRes
         @Override
         public Mono<ServerResponse> filter(ServerRequest serverRequest,
                                            HandlerFunction<ServerResponse> handlerFunction) {
-            logger.info("myFilter start.");
+            logger.info(">>>>>>>>> myFilter start.");
 //            if (serverRequest.pathVariable("name").equalsIgnoreCase("test")) {
 //                return ServerResponse.status(HttpStatus.UNAUTHORIZED).build();
 //            }
