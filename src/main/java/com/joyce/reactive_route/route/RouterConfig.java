@@ -55,6 +55,7 @@ public class RouterConfig {
                         .GET("/{id}", postService::get)
                         .GET("/getPostModelById/{id}", postService::getPostModelById)
                         .POST("/greatThanID", postService::greatThanID)
+                        .POST("/getPostModelByIdAndTitle", contentType(MediaType.APPLICATION_JSON), postService::getPostModelByIdAndTitle)
                         .filter(myFilter2)
                         .before(serverRequest -> {
                             logger.info(">>>>>>>> before request /posts ");

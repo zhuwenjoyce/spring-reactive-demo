@@ -1,6 +1,7 @@
 package com.joyce.reactive_route.service;
 
 import com.alibaba.fastjson.JSON;
+import com.joyce.my_demo.controller.WebclientController;
 import com.joyce.reactive_route.dao.PostRepository;
 import com.joyce.reactive_route.dao.PostRepository2;
 import com.joyce.reactive_route.exception.NotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
+import reactor.util.Loggers;
 
 import java.net.URI;
 import java.util.List;
@@ -28,6 +30,17 @@ import java.util.Optional;
 @Slf4j
 public class PostService {
     private static final Logger logger = LoggerFactory.getLogger(PostService.class);
+    private reactor.util.Logger reactiveLogger = Loggers.getLogger(WebclientController.class);
+
+    // 如果返回为空，则给一个默认值
+    static PostModel defaultPostModel = new PostModel();
+
+    static {
+        defaultPostModel.setId(0L);
+        defaultPostModel.setTitle("default-title");
+        defaultPostModel.setContent("default-content");
+        defaultPostModel.setCreateDate(LocalDateTime.now());
+    }
 
     @Autowired
     private PostRepository postRepository;
@@ -66,18 +79,11 @@ public class PostService {
     }
 
     public Mono<ServerResponse> getPostModelById(ServerRequest request) {
-        logger.info("exec PostService.likeByTitle.");
+        logger.info("exec PostService.getPostModelById.");
 
         String idStr = request.pathVariable("id");
         Long id = Long.valueOf(idStr);
         logger.info("exec PostService.getPostModelById. id = " + id);
-
-        // 如果返回为空，则给一个默认值
-        PostModel defaultPostModel = new PostModel();
-        defaultPostModel.setId(0L);
-        defaultPostModel.setTitle("default-title");
-        defaultPostModel.setContent("default-content");
-        defaultPostModel.setCreateDate(LocalDateTime.now());
 
         Mono<PostModel> postModelMono = postRepository.getPostModelByFixationId();
         postModelMono = postModelMono.defaultIfEmpty(defaultPostModel); // 设置默认值
@@ -94,8 +100,35 @@ public class PostService {
         return ServerResponse.ok().body(postModelMono, PostModel.class);
     }
 
+    public Mono<ServerResponse> getPostModelByIdAndTitle(ServerRequest request) {
+        logger.info("exec PostService.getPostModelByIdAndTitle. 执行开始");
+
+        // 这行代码能拿到post请求中json传参参数
+//        Mono<PostModel> requestParamPostModel = request.bodyToMono(PostModel.class);
+//        Mono<PostModel> postModelMono = requestParamPostModel.flatMap(postModel -> postRepository.getPostModelByIdAndTitle(postModel.getId(), postModel.getTitle()));
+//        return ServerResponse.ok().body(postModelMono, PostModel.class);
+
+        // 像这样直接返回代码更简洁一点
+        Mono<ServerResponse> serverResponseMono = request.bodyToMono(PostModel.class)
+                .flatMap(model -> {
+                        Mono<PostModel> mono = postRepository.getPostModelByIdAndTitle(model.getId(), model.getTitle());
+                        mono = mono.defaultIfEmpty(defaultPostModel);
+                        mono.subscribe(m->{
+                            logger.info("m ==== " + JSON.toJSONString(m));
+                        });
+                        return mono;
+                })
+                .flatMap(postModel -> {
+                    return ServerResponse.ok().body(Mono.justOrEmpty(postModel), PostModel.class);
+                });
+        logger.info("exec PostService.getPostModelByIdAndTitle 执行结束");
+        return serverResponseMono;
+    }
+
     public Mono<ServerResponse> greatThanID(ServerRequest request) {
         logger.info("exec PostService.greatThanID.");
+
+        Mono requestParamPostModel = request.bodyToMono(PostModel.class);
 
         MultiValueMap<String, String> queryParams = request.queryParams();
         Optional<String> idOptional = request.queryParam("id");

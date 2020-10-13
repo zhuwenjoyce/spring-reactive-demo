@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class Mono数据源 {
     private static final Logger logger = LoggerFactory.getLogger(Mono数据源.class);
-    private reactor.util.Logger reactorLogger = Loggers.getLogger(Mono数据源.class);
+    private reactor.util.Logger reactiveLogger = Loggers.getLogger(Mono数据源.class);
 
     @Test
     public void test_justOrEmpty() {
@@ -34,7 +34,7 @@ public class Mono数据源 {
     @Test
     public void test_justOrEmpty_for_list() {
         List<UserModel> list = Arrays.asList(new UserModel(1L, "User1"), new UserModel(2L, "User2"));
-        List<UserModel> users = Mono.justOrEmpty(list).log(reactorLogger).block();
+        List<UserModel> users = Mono.justOrEmpty(list).log(reactiveLogger).block();
         users.forEach(u -> {
             logger.info("u.username = " + u.getUsername());
         });
@@ -46,7 +46,7 @@ public class Mono数据源 {
         List<UserModel> users = (List<UserModel>) Mono.create(sink -> {
             sink.success(list);
         })
-                .log(reactorLogger)
+                .log(reactiveLogger)
                 .block();
         users.forEach(u -> {
             logger.info("u.username = " + u.getUsername());

@@ -22,7 +22,7 @@ import java.util.Map;
 public class WebclientController {
     private static final Logger logger = LoggerFactory.getLogger(WebclientController.class);
 
-    private reactor.util.Logger reactorLogger = Loggers.getLogger(WebclientController.class);
+    private reactor.util.Logger reactiveLogger = Loggers.getLogger(WebclientController.class);
 
     @GetMapping("/joyce/webclient/normal")
     public Map<String,Object> normal() throws InterruptedException {
@@ -44,7 +44,7 @@ public class WebclientController {
 //                .retrieve()
                 .exchange()
                 .flatMap(res -> res.bodyToMono(String.class))
-                .log(reactorLogger)
+                .log(reactiveLogger)
                 .doOnError(e->{
                     logger.error(" doOnError -------------- " + e.getMessage(), e);
                 })

@@ -65,7 +65,7 @@ public class Flux页面展示Controller {
     }
 
 
-    private reactor.util.Logger reactorLogger = Loggers.getLogger(Flux页面展示Controller.class);
+    private reactor.util.Logger reactiveLogger = Loggers.getLogger(Flux页面展示Controller.class);
 
     @GetMapping("/joyce/flux/log")
     public Flux<ServerSentEvent<Integer>> randomNumbers_print_log() {
@@ -75,7 +75,7 @@ public class Flux页面展示Controller {
 //                    logger.info("m == " + m + ", " + m.getClass().getName());
                     return m;
                 })
-                .log(reactorLogger)
+                .log(reactiveLogger)
                 .map(data -> ServerSentEvent.<Integer>builder()
                         .event("random")
                         .id(Long.toString(data.getT1()))

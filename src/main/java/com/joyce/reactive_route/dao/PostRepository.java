@@ -17,8 +17,13 @@ public interface PostRepository extends ReactiveCrudRepository<PostModel, Long> 
     @Query("SELECT * FROM t_post where id = 15 ")
     Mono<PostModel> getPostModelByFixationId();
 
-    @Query("SELECT * FROM t_post WHERE id = :age ")
-    Mono<PostModel> getPostModelById(@Param("ideeee") Long id);
+    // 这里一个参数，无论param里怎么写，: 冒号后面字符串乱写，都可以匹配上设置值，SQL都能正确执行
+    @Query("SELECT * FROM t_post WHERE id = :id_abc ")
+    Mono<PostModel> getPostModelById(@Param("id") Long id);
+
+//    @Query("SELECT * FROM t_post WHERE title = :title and id = :id ")
+    @Query("SELECT * FROM t_post WHERE id = :id and title = :title and content = :title ")
+    Mono<PostModel> getPostModelByIdAndTitle(@Param("id") Long id, @Param("title") String title);
 
     @Query("SELECT * FROM t_post WHERE title = 'title11' ")
     Mono<PostModel> listPostModelLikeBy();

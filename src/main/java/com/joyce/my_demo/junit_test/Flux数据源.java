@@ -20,7 +20,7 @@ import java.util.Random;
  */
 public class Flux数据源 {
     private static final Logger logger = LoggerFactory.getLogger(Flux数据源.class);
-    private reactor.util.Logger reactorLogger = Loggers.getLogger(Flux数据源.class);
+    private reactor.util.Logger reactiveLogger = Loggers.getLogger(Flux数据源.class);
 
     @Test
     public void test数据源_空值() {
@@ -108,9 +108,9 @@ public class Flux数据源 {
             sink.next("999");
             sink.complete();
         });
-//        flux.log(reactorLogger);
+//        flux.log(reactiveLogger);
 //        flux.subscribe();
-        flux.subscribe(reactorLogger::info);
+        flux.subscribe(reactiveLogger::info);
 //        flux.doOnNext(integer -> {
 //            System.out.println("doOnNext ===== " + integer);
 //        });
