@@ -31,12 +31,37 @@ public class PostRepository2 {
     此方法不起作用！！！
     * */
     @Transactional
-    public Mono<List<PostModel>> likeByTitle(String title) {
+    public Mono<List<PostModel>> greatThanID(Long id) {
+//        MySqlConnectionConfiguration configuration2 = MySqlConnectionConfiguration.builder()
+//                .host("127.0.0.1")
+//                .user("root")
+//                .port(3306) // optional, default 3306
+//                .password("database-password-in-here") // optional, default null, null means has no password
+//                .database("r2dbc") // optional, default null, null means not specifying the database
+//                .serverZoneId(ZoneId.of("Continent/City")) // optional, default null, null means query server time zone when connection init
+//                .connectTimeout(Duration.ofSeconds(3)) // optional, default null, null means no timeout
+//                .sslMode(SslMode.VERIFY_IDENTITY) // optional, default SslMode.PREFERRED
+//                .sslCa("/path/to/mysql/ca.pem") // required when sslMode is VERIFY_CA or VERIFY_IDENTITY, default null, null means has no server CA cert
+//                .sslCert("/path/to/mysql/client-cert.pem") // optional, default has no client SSL certificate
+//                .sslKey("/path/to/mysql/client-key.pem") // optional, default has no client SSL key
+//                .sslKeyPassword("key-pem-password-in-here") // optional, default has no client SSL key password
+//                .tlsVersion(TlsVersions.TLS1_3, TlsVersions.TLS1_2, TlsVersions.TLS1_1) // optional, default is auto-selected by the server
+//                .sslHostnameVerifier(MyVerifier.INSTANCE) // optional, default is null, null means use standard verifier
+//                .sslContextBuilderCustomizer(MyCustomizer.INSTANCE) // optional, default is no-op customizer
+//                .zeroDateOption(ZeroDateOption.USE_NULL) // optional, default ZeroDateOption.USE_NULL
+//                .useServerPrepareStatement() // Use server-preparing statements, default use client-preparing statements
+//                .tcpKeepAlive(true) // optional, controls TCP Keep Alive, default is false
+//                .tcpNoDelay(true) // optional, controls TCP No Delay, default is false
+//                .autodetectExtensions(false) // optional, controls extension auto-detect, default is true
+//                .extendWith(MyExtension.INSTANCE) // optional, manual extend an extension into extensions, default using auto-detect
+//                .build();
+//        ConnectionFactory connectionFactory = MySqlConnectionFactory.from(configuration2);
+
         Flux<Result> results = Mono.from(connectionFactory.create())
                 .flatMapMany(connection -> {
                     return connection
                             .createStatement("SELECT id,title from t_post WHERE id = 5 ")
-//                    .bind(0, title)
+//                    .bind("$id", id)
                             .execute()
                             ;
                 });

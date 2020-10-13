@@ -1,10 +1,12 @@
 package com.joyce.reactive_route.service;
 
+import com.alibaba.fastjson.JSON;
 import com.joyce.reactive_route.dao.PostRepository;
 import com.joyce.reactive_route.dao.PostRepository2;
 import com.joyce.reactive_route.exception.NotFoundException;
 import com.joyce.reactive_route.model.PostModel;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -62,27 +65,50 @@ public class PostService {
         return ServerResponse.ok().body(postModel, PostModel.class);
     }
 
-    public Mono<ServerResponse> likeByTitle(ServerRequest request) {
+    public Mono<ServerResponse> getPostModelById(ServerRequest request) {
         logger.info("exec PostService.likeByTitle.");
 
-        Mono<PostModel> postModelList = postRepository.listPostModelLikeBy();
-//        postModelList.doOnNext(postModel -> {
-//            logger.info("doOnNext ========== " + JSON.toJSONString(postModel));
-//        });
+        String idStr = request.pathVariable("id");
+        Long id = Long.valueOf(idStr);
+        logger.info("exec PostService.getPostModelById. id = " + id);
+
+        // 如果返回为空，则给一个默认值
+        PostModel defaultPostModel = new PostModel();
+        defaultPostModel.setId(0L);
+        defaultPostModel.setTitle("default-title");
+        defaultPostModel.setContent("default-content");
+        defaultPostModel.setCreateDate(LocalDateTime.now());
+
+        Mono<PostModel> postModelMono = postRepository.getPostModelByFixationId();
+        postModelMono = postModelMono.defaultIfEmpty(defaultPostModel); // 设置默认值
+        postModelMono.subscribe(model -> { // subscribe可以打印出内容
+           logger.info(" subscribe fixation id ========== " + JSON.toJSONString(model));
+        });
+
+        Mono<PostModel> postModelMono2 = postRepository.getPostModelById(id);
+        postModelMono2 = postModelMono2.defaultIfEmpty(defaultPostModel); // 设置默认值
+        postModelMono2.subscribe(postModel -> {
+            logger.info(" subscribe 2 ========== " + JSON.toJSONString(postModel));
+        });
+
+        return ServerResponse.ok().body(postModelMono, PostModel.class);
+    }
+
+    public Mono<ServerResponse> greatThanID(ServerRequest request) {
+        logger.info("exec PostService.greatThanID.");
 
         MultiValueMap<String, String> queryParams = request.queryParams();
-        Optional<String> titleOptional = request.queryParam("title");
-        String title = titleOptional.get();
-        logger.info("exec PostService.getByName. title = " + title);
+        Optional<String> idOptional = request.queryParam("id");
+        Long id = Long.valueOf(idOptional.get());
+        logger.info("exec PostService.greatThanID. id = " + id);
 
+        Mono<List<PostModel>> postModelList = postRepository2.greatThanID(id);
 
+//      这行可以打印出内容，保留，并注释掉
 //        postModelList.subscribe(postModel -> {
 //           logger.info(" subscribe ========== " + JSON.toJSONString(postModel));
 //        });
 
-//        postRepository2.likeByTitle(title);
-//        Mono<PostModel> postModel = postRepository.findByTitle(title);
-//        postModel.is
         return ServerResponse.ok().body(postModelList, PostModel.class);
     }
 

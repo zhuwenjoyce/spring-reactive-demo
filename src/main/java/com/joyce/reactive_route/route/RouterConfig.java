@@ -53,8 +53,8 @@ public class RouterConfig {
                 .path("/posts", builder ->
                         builder.GET("", postService::list)
                         .GET("/{id}", postService::get)
-                        .POST("/findByTitle", contentType(MediaType.APPLICATION_JSON), postService::findByTitle)
-                        .POST("/likeByTitle", contentType(MediaType.APPLICATION_JSON), postService::likeByTitle)
+                        .GET("/getPostModelById/{id}", postService::getPostModelById)
+                        .POST("/greatThanID", postService::greatThanID)
                         .filter(myFilter2)
                         .before(serverRequest -> {
                             logger.info(">>>>>>>> before request /posts ");
