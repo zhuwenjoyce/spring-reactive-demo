@@ -29,8 +29,8 @@ import static org.junit.Assert.assertTrue;
  * @author: Joyce Zhu
  * @date: 2020/10/10
  */
-public class PostServiceTest extends RouteApplicationTests {
-    private static final Logger logger = LoggerFactory.getLogger(PostServiceTest.class);
+public class PostServiceReactiveCrudTest extends RouteApplicationTests {
+    private static final Logger logger = LoggerFactory.getLogger(PostServiceReactiveCrudTest.class);
 
     @Autowired
     ApplicationContext context;

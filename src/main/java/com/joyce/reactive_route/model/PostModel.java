@@ -15,7 +15,6 @@ import org.joda.time.LocalDateTime;
  * @date: 2020/10/9
  */
 @Data
-@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,4 +31,14 @@ public class PostModel {
     @Column("create_date")
     @CreatedDate
     private LocalDateTime createDate;
+
+    @Override
+    public String toString() {
+        return " >>>>>>>>>>>>>>>> PostModel{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", createDate=" + createDate +
+                '}';
+    }
 }

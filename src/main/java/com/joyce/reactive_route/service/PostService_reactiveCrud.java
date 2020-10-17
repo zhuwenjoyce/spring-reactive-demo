@@ -1,16 +1,13 @@
 package com.joyce.reactive_route.service;
 
 import com.alibaba.fastjson.JSON;
-import com.joyce.my_demo.controller.WebclientController;
-import com.joyce.reactive_route.dao.PostRepository;
-import com.joyce.reactive_route.dao.PostRepository2;
+import com.joyce.reactive_route.dao.PostRepository_reactiveCrud;
 import com.joyce.reactive_route.exception.NotFoundException;
 import com.joyce.reactive_route.model.PostModel;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.LocalDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -19,7 +16,6 @@ import reactor.core.publisher.Mono;
 import reactor.util.Loggers;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -28,13 +24,11 @@ import java.util.Optional;
  */
 @Component
 @Slf4j
-public class PostService {
-    private static final Logger logger = LoggerFactory.getLogger(PostService.class);
-    private reactor.util.Logger reactiveLogger = Loggers.getLogger(WebclientController.class);
+public class PostService_reactiveCrud {
+    private reactor.util.Logger reactiveLogger = Loggers.getLogger(PostService_reactiveCrud.class);
 
     // 如果返回为空，则给一个默认值
     static PostModel defaultPostModel = new PostModel();
-
     static {
         defaultPostModel.setId(0L);
         defaultPostModel.setTitle("default-title");
@@ -43,20 +37,17 @@ public class PostService {
     }
 
     @Autowired
-    private PostRepository postRepository;
-
-    @Autowired
-    PostRepository2 postRepository2;
+    private PostRepository_reactiveCrud postRepository;
 
     public Mono<ServerResponse> list(ServerRequest request) {
-        logger.info("exec PostService.list");
+        log.info("exec PostService.list");
         return ServerResponse
                 .ok()
                 .body(postRepository.findAll(), PostModel.class);
     }
 
     public Mono<ServerResponse> get(ServerRequest request) {
-        logger.info("exec PostService.get");
+        log.info("exec PostService.get");
         Long id = Long.valueOf(request.pathVariable("id"));
         Mono<PostModel> postModelMono = postRepository.findById(id);
         return postModelMono.flatMap(post ->
@@ -68,40 +59,41 @@ public class PostService {
 
 
     public Mono<ServerResponse> findByTitle(ServerRequest request) {
-        logger.info("exec PostService.getByName.");
+        log.info("exec PostService.getByName.");
         MultiValueMap<String, String> queryParams = request.queryParams();
         Optional<String> titleOptional = request.queryParam("title");
         String title = titleOptional.get();
-        logger.info("exec PostService.getByName. title = " + title);
+        log.info("exec PostService.getByName. title = " + title);
         Mono<PostModel> postModel = postRepository.findByTitle(title);
 //        postModel.is
         return ServerResponse.ok().body(postModel, PostModel.class);
     }
 
     public Mono<ServerResponse> getPostModelById(ServerRequest request) {
-        logger.info("exec PostService.getPostModelById.");
+        log.info("exec PostService.getPostModelById.");
 
         String idStr = request.pathVariable("id");
         Long id = Long.valueOf(idStr);
-        logger.info("exec PostService.getPostModelById. id = " + id);
+        log.info("exec PostService.getPostModelById. id = " + id);
 
         Mono<PostModel> postModelMono = postRepository.getPostModelByFixationId();
         postModelMono = postModelMono.defaultIfEmpty(defaultPostModel); // 设置默认值
         postModelMono.subscribe(model -> { // subscribe可以打印出内容
-           logger.info(" subscribe fixation id ========== " + JSON.toJSONString(model));
+           log.info(" subscribe fixation id ========== " + JSON.toJSONString(model));
         });
 
         Mono<PostModel> postModelMono2 = postRepository.getPostModelById(id);
         postModelMono2 = postModelMono2.defaultIfEmpty(defaultPostModel); // 设置默认值
         postModelMono2.subscribe(postModel -> {
-            logger.info(" subscribe 2 ========== " + JSON.toJSONString(postModel));
+            log.info(" subscribe 2 ========== " + JSON.toJSONString(postModel));
         });
 
         return ServerResponse.ok().body(postModelMono, PostModel.class);
     }
 
+    // 尚未试验成功
     public Mono<ServerResponse> getPostModelByIdAndTitle(ServerRequest request) {
-        logger.info("exec PostService.getPostModelByIdAndTitle. 执行开始");
+        log.info("exec PostService.getPostModelByIdAndTitle. 执行开始");
 
         // 这行代码能拿到post请求中json传参参数
 //        Mono<PostModel> requestParamPostModel = request.bodyToMono(PostModel.class);
@@ -114,39 +106,22 @@ public class PostService {
                         Mono<PostModel> mono = postRepository.getPostModelByIdAndTitle(model.getId(), model.getTitle());
                         mono = mono.defaultIfEmpty(defaultPostModel);
                         mono.subscribe(m->{
-                            logger.info("m ==== " + JSON.toJSONString(m));
+                            log.info("m ==== " + JSON.toJSONString(m));
                         });
                         return mono;
                 })
                 .flatMap(postModel -> {
-                    return ServerResponse.ok().body(Mono.justOrEmpty(postModel), PostModel.class);
-                });
-        logger.info("exec PostService.getPostModelByIdAndTitle 执行结束");
+                    return ServerResponse.ok()
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .body(Mono.justOrEmpty(postModel), PostModel.class);
+                })
+                ;
+        log.info("exec PostService.getPostModelByIdAndTitle 执行结束");
         return serverResponseMono;
     }
 
-    public Mono<ServerResponse> greatThanID(ServerRequest request) {
-        logger.info("exec PostService.greatThanID.");
-
-        Mono requestParamPostModel = request.bodyToMono(PostModel.class);
-
-        MultiValueMap<String, String> queryParams = request.queryParams();
-        Optional<String> idOptional = request.queryParam("id");
-        Long id = Long.valueOf(idOptional.get());
-        logger.info("exec PostService.greatThanID. id = " + id);
-
-        Mono<List<PostModel>> postModelList = postRepository2.greatThanID(id);
-
-//      这行可以打印出内容，保留，并注释掉
-//        postModelList.subscribe(postModel -> {
-//           logger.info(" subscribe ========== " + JSON.toJSONString(postModel));
-//        });
-
-        return ServerResponse.ok().body(postModelList, PostModel.class);
-    }
-
     public Mono<ServerResponse> save(ServerRequest request) {
-        logger.info("exec PostService.save");
+        log.info("exec PostService.save");
         return request.bodyToMono(PostModel.class)
                 .flatMap(post -> postRepository.save(post))
                 .flatMap(post ->
@@ -157,9 +132,9 @@ public class PostService {
     }
 
     public Mono<ServerResponse> update(ServerRequest request) {
-        logger.info("exec PostService.update");
+        log.info("exec PostService.update");
         String idStr = request.pathVariable("id");
-        logger.info("update start. idStr = " + idStr);
+        log.info("update start. idStr = " + idStr);
         Mono<ServerResponse> responseMono = Mono.zip((data) -> {
                     // This two object from query DB and request body
                     PostModel originPost = (PostModel) data[0];
@@ -174,18 +149,18 @@ public class PostService {
         )
                 .cast(PostModel.class)
                 .flatMap(post -> {
-                    logger.info("update post model. before save.");
+                    log.info("update post model. before save.");
                     Mono<PostModel> postModelMono = postRepository.save(post);
-                    logger.info("update post model. after save.");
+                    log.info("update post model. after save.");
                     return postModelMono;
                 })
                 .flatMap(post -> ServerResponse.noContent().build());
-        logger.info("update end.");
+        log.info("update end.");
         return responseMono;
     }
 
     public Mono<ServerResponse> delete(ServerRequest request) {
-        logger.info("exec PostService.delete");
+        log.info("exec PostService.delete");
         String idStr = request.pathVariable("id");
         Long id = Long.valueOf(idStr);
         return postRepository.findById(id)

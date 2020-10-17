@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
  * @author: Joyce Zhu
  * @date: 2020/10/10
  */
-public interface PostRepository extends ReactiveCrudRepository<PostModel, Long> {
+public interface PostRepository_reactiveCrud extends ReactiveCrudRepository<PostModel, Long> {
 
     Mono<PostModel> findByTitle(String title);
 
@@ -27,6 +27,7 @@ public interface PostRepository extends ReactiveCrudRepository<PostModel, Long> 
 
     @Query("SELECT * FROM t_post WHERE title = 'title11' ")
     Mono<PostModel> listPostModelLikeBy();
+
 }
 
 
