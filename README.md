@@ -11,6 +11,7 @@
 |[reactive_jasync_mysql](./src/main/java/com/joyce/reactive_jasync_mysql/README.md)| 基本的 WebFlux Demo，使用 REST 接口，MySQL 作为存储。 demo 亲测可用 |
 |[reactive-router](./src/main/java/com/joyce/reactive_route/README.md)| 使用 WebFlux 的路由，不需要controller的暴露直接调用方法。 demo 亲测可用 |
 |[reactive-redis](./src/main/java/com/joyce/reactive_redis/README.md)| 基本的 WebFlux Demo，使用 REST 接口，Redis 作为存储。 demo 亲测可用 |
+|[reactive-stream-echarts](./src/main/java/com/joyce/reactive_stream_echarts/README.md) | 使用事件流生成图表，图表库为 echarts。无法验证，因为需要下载和安装echarts，我不会。|
 |。。。| 以下为待验证的demo |
 |[reactive-mongo](./reactive-mongo/README.md)| 基本的 WebFlux Demo，使用 REST 接口，MongoDB 作为存储|
 |[reactive-security](./reactive-security/README.md)| 使用 Spring Security，Spring Session，MongoDB 作为存储 |
@@ -18,7 +19,6 @@
 |[reactive-multiple-router](./reactive-multiple-router/README.md) | 文件上传，使用路由|
 |[reactive-multiple-mongo](./reactive-multiple-mongo/README.md) | 文件上传，使用 REST 接口，并将文件存到 MongoDB|
 |[reactive-stream](./reactive-stream/README.md)| 使用事件流生成图表，图表库为 highcharts|
-|[reactive-stream-echarts](./reactive-stream-echarts/README.md) | 使用事件流生成图表，图表库为 echarts|
 |[reactive-thymeleaf](./reactive-thymeleaf/README.md)| 使用 Thymeleaf 的含有页面的 Demo|
 |[reactive-stream-angular](./reactive-stream-angular/README.md) | 使用 Angular 和 WebFlux 构建的响应式 APP|
 |[reactive-r2dbc-h2](./reactive-r2dbc-h2/README.md)| 基本的 WebFlux Demo，使用 REST 接口，H2 作为存储|
