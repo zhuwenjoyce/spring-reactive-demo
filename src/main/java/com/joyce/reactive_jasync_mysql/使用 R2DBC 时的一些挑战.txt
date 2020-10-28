@@ -1,0 +1,11 @@
+https://www.chainnews.com/articles/198302708247.htm
+该文章说：
+
+使用 R2DBC 时的一些挑战
+JPA 无法处理像 Spring Data R2DBC 提供响应式功能。这意味着在使用 R2DBC 时，你将不得不手动做更多工作。
+还有其他响应式驱动，例如 Quarkus Reactive Postgres 客户端（使用 Vert.x）。他们不使用 R2DBC，并且有不同的性能特性。
+有限的可用性
+不是所有的关系型数据库都有响应式的驱动程序。例如，Oracle 还没有 R2DBC 实现。
+应用服务器仍然依赖于 JDBC。在这个 Kubernetes 时代，人们还在使用那些上古功能吗？
+当 Java Fibers 推出的时候（Project Loom，可能是 Java 15），数据库驱动的格局可能会再次发生变化，R2DBC 可能不会成为 JDBC 的继任者。
+
