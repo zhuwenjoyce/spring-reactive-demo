@@ -9,3 +9,10 @@ JPA 无法处理像 Spring Data R2DBC 提供响应式功能。这意味着在使
 应用服务器仍然依赖于 JDBC。在这个 Kubernetes 时代，人们还在使用那些上古功能吗？
 当 Java Fibers 推出的时候（Project Loom，可能是 Java 15），数据库驱动的格局可能会再次发生变化，R2DBC 可能不会成为 JDBC 的继任者。
 
+
+
+
+https://medium.com/@sauravomar01/coroutines-or-java-fibers-in-project-loom-7f6841a15508
+Coroutines or Java Fibers in Project Loom
+
+Project Loom在Java中引入了轻量级并发构造。 Project Loom的主要目的或目标是在Java中支持高吞吐量，轻量级的并发模型。
