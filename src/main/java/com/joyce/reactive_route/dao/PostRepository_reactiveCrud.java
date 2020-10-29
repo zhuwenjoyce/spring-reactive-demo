@@ -22,7 +22,7 @@ public interface PostRepository_reactiveCrud extends ReactiveCrudRepository<Post
     Mono<PostModel> getPostModelById(@Param("id") Long id);
 
 //    @Query("SELECT * FROM t_post WHERE title = :title and id = :id ")
-    @Query("SELECT * FROM t_post WHERE id = :id and title = :title and content = :title ")
+    @Query("SELECT * FROM t_post WHERE id = :id and title = :title ")
     Mono<PostModel> getPostModelByIdAndTitle(@Param("id") Long id, @Param("title") String title);
 
     @Query("SELECT * FROM t_post WHERE title = 'title11' ")

@@ -91,7 +91,6 @@ public class PostService_reactiveCrud {
         return ServerResponse.ok().body(postModelMono, PostModel.class);
     }
 
-    // 尚未试验成功
     public Mono<ServerResponse> getPostModelByIdAndTitle(ServerRequest request) {
         log.info("exec PostService.getPostModelByIdAndTitle. 执行开始");
 
