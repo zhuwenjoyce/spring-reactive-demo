@@ -45,7 +45,8 @@ public class Flux页面展示Controller {
                 .map(data -> ServerSentEvent.<Integer>builder()
                         .event("random")
                         .id(Long.toString(data.getT1()))
-                        .data(data.getT2())
+//                        .data(data.getT2())
+                        .data(50)
                         .build());
         /*
         每间隔一秒就向页面返回一次内容：

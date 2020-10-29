@@ -37,19 +37,19 @@ public class PostService_reactiveCrud {
     }
 
     @Autowired
-    private PostRepository_reactiveCrud postRepository;
+    private PostRepository_reactiveCrud postReactiveRepository;
 
     public Mono<ServerResponse> list(ServerRequest request) {
         log.info("exec PostService.list");
         return ServerResponse
                 .ok()
-                .body(postRepository.findAll(), PostModel.class);
+                .body(postReactiveRepository.findAll(), PostModel.class);
     }
 
     public Mono<ServerResponse> get(ServerRequest request) {
         log.info("exec PostService.get");
         Long id = Long.valueOf(request.pathVariable("id"));
-        Mono<PostModel> postModelMono = postRepository.findById(id);
+        Mono<PostModel> postModelMono = postReactiveRepository.findById(id);
         return postModelMono.flatMap(post ->
                         ServerResponse
                                 .ok()
@@ -64,7 +64,7 @@ public class PostService_reactiveCrud {
         Optional<String> titleOptional = request.queryParam("title");
         String title = titleOptional.get();
         log.info("exec PostService.getByName. title = " + title);
-        Mono<PostModel> postModel = postRepository.findByTitle(title);
+        Mono<PostModel> postModel = postReactiveRepository.findByTitle(title);
 //        postModel.is
         return ServerResponse.ok().body(postModel, PostModel.class);
     }
@@ -76,13 +76,13 @@ public class PostService_reactiveCrud {
         Long id = Long.valueOf(idStr);
         log.info("exec PostService.getPostModelById. id = " + id);
 
-        Mono<PostModel> postModelMono = postRepository.getPostModelByFixationId();
+        Mono<PostModel> postModelMono = postReactiveRepository.getPostModelByFixationId();
         postModelMono = postModelMono.defaultIfEmpty(defaultPostModel); // 设置默认值
         postModelMono.subscribe(model -> { // subscribe可以打印出内容
            log.info(" subscribe fixation id ========== " + JSON.toJSONString(model));
         });
 
-        Mono<PostModel> postModelMono2 = postRepository.getPostModelById(id);
+        Mono<PostModel> postModelMono2 = postReactiveRepository.getPostModelById(id);
         postModelMono2 = postModelMono2.defaultIfEmpty(defaultPostModel); // 设置默认值
         postModelMono2.subscribe(postModel -> {
             log.info(" subscribe 2 ========== " + JSON.toJSONString(postModel));
@@ -102,7 +102,7 @@ public class PostService_reactiveCrud {
         // 像这样直接返回代码更简洁一点
         Mono<ServerResponse> serverResponseMono = request.bodyToMono(PostModel.class)
                 .flatMap(model -> {
-                        Mono<PostModel> mono = postRepository.getPostModelByIdAndTitle(model.getId(), model.getTitle());
+                        Mono<PostModel> mono = postReactiveRepository.getPostModelByIdAndTitle(model.getId(), model.getTitle());
                         mono = mono.defaultIfEmpty(defaultPostModel);
                         mono.subscribe(m->{
                             log.info("m ==== " + JSON.toJSONString(m));
@@ -122,7 +122,7 @@ public class PostService_reactiveCrud {
     public Mono<ServerResponse> save(ServerRequest request) {
         log.info("exec PostService.save");
         return request.bodyToMono(PostModel.class)
-                .flatMap(post -> postRepository.save(post))
+                .flatMap(post -> postReactiveRepository.save(post))
                 .flatMap(post ->
                         ServerResponse.created(
                                 URI.create("/posts/" + post.getId())
@@ -142,14 +142,14 @@ public class PostService_reactiveCrud {
                     originPost.setContent(newPost.getContent());
                     return originPost;
                 },
-                postRepository.findById(Long.valueOf(idStr))
+                postReactiveRepository.findById(Long.valueOf(idStr))
                         .switchIfEmpty(Mono.error(new NotFoundException(Long.valueOf(request.pathVariable("id"))))),
                 request.bodyToMono(PostModel.class)
         )
                 .cast(PostModel.class)
                 .flatMap(post -> {
                     log.info("update post model. before save.");
-                    Mono<PostModel> postModelMono = postRepository.save(post);
+                    Mono<PostModel> postModelMono = postReactiveRepository.save(post);
                     log.info("update post model. after save.");
                     return postModelMono;
                 })
@@ -162,13 +162,12 @@ public class PostService_reactiveCrud {
         log.info("exec PostService.delete");
         String idStr = request.pathVariable("id");
         Long id = Long.valueOf(idStr);
-        return postRepository.findById(id)
+        return postReactiveRepository.findById(id)
                 .switchIfEmpty(Mono.error(new NotFoundException(id)))
-                .then(postRepository.deleteById(id))
+                .then(postReactiveRepository.deleteById(id))
                 .then(ServerResponse
                         .noContent()
-                        .build(postRepository.deleteById(id)));
+                        .build(postReactiveRepository.deleteById(id)));
     }
-
 
 }

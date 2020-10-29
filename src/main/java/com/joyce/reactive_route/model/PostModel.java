@@ -1,12 +1,17 @@
 package com.joyce.reactive_route.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.joyce.reactive_route.util.LocalDateTimeDeserializer;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
-
-import org.joda.time.LocalDateTime;
 
 //import org.springframework.data.relational.core.mapping.Table;
 
@@ -30,6 +35,8 @@ public class PostModel {
 
     @Column("create_date")
     @CreatedDate
+    @JsonProperty("createDate")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createDate;
 
     @Override

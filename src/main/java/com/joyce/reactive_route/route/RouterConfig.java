@@ -71,6 +71,7 @@ public class RouterConfig {
                             logger.info(">>>>>>>> after response /posts !");
                             return serverResponse;
                         })
+                        .build()
                 )
                 .path("/r2dbc", builder ->
                         builder.POST("/greatThanID", postService_r2dbc::greatThanID)
