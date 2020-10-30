@@ -28,7 +28,7 @@ public class ReactiveCrudController {
         log.info("exec PostService.getPostModelByCreateDate 执行开始。 param createDate = {}", createDate);
 
         Flux<PostModel> postModelFlux =
-                postReactiveRepository.getPostModelByCreateDate(createDate)
+                postReactiveRepository.getPostModelByCreateDate2()
                 .doOnError(ex -> log.error(ex.getMessage(), ex) )
                 .log("getPostModelByCreateDate by dao::::");
 
