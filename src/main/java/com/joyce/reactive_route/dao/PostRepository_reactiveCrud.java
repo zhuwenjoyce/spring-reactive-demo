@@ -29,11 +29,11 @@ public interface PostRepository_reactiveCrud extends ReactiveCrudRepository<Post
     @Query("SELECT * FROM t_post WHERE title = 'title11' ")
     Mono<PostModel> listPostModelLikeBy();
 
-    @Query("SELECT * FROM t_post WHERE create_date >= :createDate ")
-    Flux<PostModel> getPostModelByCreateDate(@Param("createDate") LocalDateTime createDate);
-
     @Query("SELECT * FROM t_post WHERE create_date >= '2020-10-10 23:22:35' ")
     Flux<PostModel> getPostModelByFixedCreateDate();
+
+    @Query("SELECT * FROM t_post WHERE create_date >= :createDate ")
+    Flux<PostModel> getPostModelByCreateDate(@Param("createDate") LocalDateTime createDate);
 }
 
 

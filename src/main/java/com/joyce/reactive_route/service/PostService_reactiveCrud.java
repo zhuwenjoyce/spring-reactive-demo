@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.Loggers;
 
@@ -116,6 +117,35 @@ public class PostService_reactiveCrud {
                 })
                 ;
         log.info("exec PostService.getPostModelByIdAndTitle 执行结束");
+        return serverResponseMono;
+    }
+
+    public Mono<ServerResponse> listPostModelByCreateDate(ServerRequest request) {
+        log.info("exec PostService.listPostModelByCreateDate. 执行开始");
+
+        // 这行代码能拿到post请求中json传参参数
+//        Mono<PostModel> requestParamPostModel = request.bodyToMono(PostModel.class);
+//        Mono<PostModel> postModelMono = requestParamPostModel.flatMap(postModel -> postRepository.getPostModelByIdAndTitle(postModel.getId(), postModel.getTitle()));
+//        return ServerResponse.ok().body(postModelMono, PostModel.class);
+
+        // 像这样直接返回代码更简洁一点
+        Mono<ServerResponse> serverResponseMono = request.bodyToMono(PostModel.class)
+                .flatMap(model -> {
+//                    List<PostModel> postModelList = postReactiveRepository.listPostModelByCreateDate(model.getCreateDate());
+//                    Mono<List> mono = Mono.justOrEmpty(postModelList);
+                    Flux<PostModel> flux = postReactiveRepository.getPostModelByCreateDate(model.getCreateDate());
+                    flux.subscribe(list->{
+                        log.info("subscribe list ==== " + JSON.toJSONString(list));
+                    });
+                    return Mono.justOrEmpty(flux);
+                })
+                .flatMap(postModel -> {
+                    return ServerResponse.ok()
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .body(postModel, PostModel.class);
+                })
+                ;
+        log.info("exec PostService.listPostModelByCreateDate 执行结束");
         return serverResponseMono;
     }
 

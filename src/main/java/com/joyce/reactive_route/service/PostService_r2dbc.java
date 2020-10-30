@@ -37,7 +37,6 @@ public class PostService_r2dbc {
         defaultPostModel.setCreateDate(LocalDateTime.now());
     }
 
-    // 尚未试验成功
     public Mono<ServerResponse> greatThanID(ServerRequest request) {
         log.info("exec PostService_r2dbc.greatThanID.");
 

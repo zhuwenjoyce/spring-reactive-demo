@@ -61,7 +61,7 @@ public class RouterConfig {
                                 .GET("/getPostModelById/{id}", postServiceReactiveCrud::getPostModelById)
                                 .POST("/greatThanID", postService_r2dbc::greatThanID)
                                 .POST("/getPostModelByIdAndTitle", contentType(MediaType.APPLICATION_JSON), postServiceReactiveCrud::getPostModelByIdAndTitle)
-//                                .POST("/getPostModelByCreateDate", postServiceReactiveCrud::getPostModelByCreateDate)
+                                .POST("/listPostModelByCreateDate", postServiceReactiveCrud::listPostModelByCreateDate)
                         .filter(myFilter2)
                         .before(serverRequest -> {
                             logger.info(">>>>>>>> before request /posts ");
