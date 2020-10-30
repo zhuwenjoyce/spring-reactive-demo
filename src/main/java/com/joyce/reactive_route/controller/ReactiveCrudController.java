@@ -1,4 +1,4 @@
-package com.joyce.reactive_route.service;
+package com.joyce.reactive_route.controller;
 
 import com.joyce.reactive_route.dao.PostRepository_reactiveCrud;
 import com.joyce.reactive_route.model.PostModel;
