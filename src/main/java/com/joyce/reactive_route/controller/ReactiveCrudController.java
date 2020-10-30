@@ -22,7 +22,7 @@ public class ReactiveCrudController {
     @Autowired
     private PostRepository_reactiveCrud postReactiveRepository;
 
-    @PostMapping("/posts/getPostModelByFixedCreateDate")
+    @PostMapping("/controller/reactive-crud/getPostModelByFixedCreateDate")
     public Flux<ServerSentEvent<PostModel>> getPostModelByFixedCreateDate() {
         log.info("exec PostService.getPostModelByFixedCreateDate 执行开始。");
 
@@ -46,7 +46,7 @@ public class ReactiveCrudController {
     /*
     在postman里使用body-json的格式发送参数： {"createDate": "2020-10-10 11:00:00"}
      */
-    @PostMapping("/posts/getPostModelByCreateDate")
+    @PostMapping("/controller/reactive-crud/getPostModelByCreateDate")
     public Flux<ServerSentEvent<PostModel>> getPostModelByCreateDate(@RequestBody PostModel postModel) {
         log.info("exec PostService.getPostModelByCreateDate 执行开始。 param createDate = {}", postModel.getCreateDate());
 
