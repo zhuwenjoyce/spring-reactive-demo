@@ -42,13 +42,4 @@ public class PostModel {
     @JsonSerialize(using = LocalDateTimeSerialize.class)
     private LocalDateTime createDate;
 
-    @Override
-    public String toString() {
-        return " >>>>>>>>>>>>>>>> PostModel{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", createDate=" + createDate +
-                '}';
-    }
 }

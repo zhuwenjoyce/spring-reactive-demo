@@ -33,7 +33,7 @@ public interface PostRepository_reactiveCrud extends ReactiveCrudRepository<Post
     Flux<PostModel> getPostModelByCreateDate(@Param("createDate") LocalDateTime createDate);
 
     @Query("SELECT * FROM t_post WHERE create_date >= '2020-10-10 23:22:35' ")
-    Flux<PostModel> getPostModelByCreateDate2();
+    Flux<PostModel> getPostModelByFixedCreateDate();
 }
 
 
